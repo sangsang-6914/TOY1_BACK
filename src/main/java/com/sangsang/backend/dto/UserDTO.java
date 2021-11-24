@@ -3,8 +3,10 @@ package com.sangsang.backend.dto;
 import com.sangsang.backend.common.Gender;
 import lombok.*;
 
-@Getter
 @Builder
+@Getter
+@Setter
+@NoArgsConstructor
 @AllArgsConstructor
 public class UserDTO {
     private String oid;

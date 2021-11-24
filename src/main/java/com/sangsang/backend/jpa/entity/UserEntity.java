@@ -2,17 +2,15 @@ package com.sangsang.backend.jpa.entity;
 
 import com.sangsang.backend.common.Gender;
 import com.sun.istack.NotNull;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Entity
 @Table(name = "bdt_user")
-@Getter
 @Setter
-@EqualsAndHashCode
+@Getter
+@NoArgsConstructor
+@Entity
 public class UserEntity {
 
     @Id

@@ -5,6 +5,7 @@ import com.sangsang.backend.jpa.entity.UserEntity;
 import com.sangsang.backend.jpa.repository.UserJPARepository;
 import com.sangsang.backend.jpa.service.UserService;
 import com.sangsang.backend.mapper.UserMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,14 +13,18 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @Service("userJPAService")
+@RequiredArgsConstructor
 public class UserJPAService implements UserService {
 
     @Autowired
     UserJPARepository userJPARepository;
 
+    private final UserMapper userMapper;
+
     @Override
-    public UserDTO get(String s) {
-        return null;
+    public UserDTO get(String id) {
+        UserEntity entity = userJPARepository.getById(id);
+        return userMapper.entityToDto(entity);
     }
 
     @Override
@@ -40,20 +45,27 @@ public class UserJPAService implements UserService {
     @Override
     public UserDTO login(UserDTO dto) {
 
+        /*
         // password 암호화 비교
         UserEntity entity = userJPARepository.findByIdAndPassword(dto.getId(), dto.getPassword());
         if (entity == null) {
             // 추후 에러 or 메시지 처리
             System.out.println("존재하지 않는 사용자");
         } else {
-            return UserMapper.INSTANCE.entityToDto(entity);
+            return userMapper.entityToDto(entity);
         }
+         */
 
-        return null;
+        UserEntity entity = userMapper.dtoToEntity(dto);
+
+        return userMapper.entityToDto(entity);
     }
 
     @Override
     public boolean join(UserDTO dto) {
+        UserEntity entity = userMapper.dtoToEntity(dto);
+        userJPARepository.save(entity);
+
         return true;
     }
 }
