@@ -16,8 +16,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @SpringBootTest
 public class UserMapperTest {
@@ -28,11 +30,13 @@ public class UserMapperTest {
     @Autowired
     UserMapper userMapper;
 
+    private String userOid = "AXKO133KMMM";
+
     @Test
     @DisplayName("DTO에서 Entity로 변환")
     void dtoToEntityTest() {
         final UserDTO userDTO = UserDTO.builder()
-                .oid("AMDKDDD")
+                .oid(userOid)
                 .id("sangsang6914")
                 .name("우상훈")
                 .age(24)
@@ -45,10 +49,11 @@ public class UserMapperTest {
 
     @Test
     @DisplayName("JPA CRUD Test")
-    void jpaCrudTest() {
+    void jpaCreateTest() {
         final UserDTO userDTO = UserDTO.builder()
-                .oid("AXKO133KMMM")
+                .oid(userOid)
                 .id("sangsang691422")
+                .password("AKEIWLLKSISKSLAKAL")
                 .name("김상훈")
                 .age(44)
                 .gender(Gender.W)
@@ -56,9 +61,36 @@ public class UserMapperTest {
 
         // 가입
         userService.join(userDTO);
+    }
 
-        // 조회
-        UserDTO dtoFromDB = userService.get(userDTO.getOid());
-        System.out.println(dtoFromDB.getId());
+    @Test
+    @DisplayName("JPA Read Test")
+    void jpaReadTest() {
+        UserDTO userDto = userService.get(userOid);
+
+        System.out.println(userDto.getId());
+        System.out.println(userDto.getName());
+    }
+
+    @Test
+    @DisplayName("JPA Delete Test")
+    void jpaDeleteTest() {
+        UserDTO userDTO = userService.delete(userOid);
+
+        System.out.println(userDTO.getName());
+        System.out.println(userDTO.getId());
+    }
+
+    @Test
+    @DisplayName("JPA Search Test")
+    void jpaSearchTest() {
+
+        List<UserDTO> list = userService.search();
+
+        for (UserDTO dto : list) {
+            System.out.println(dto.getId());
+            System.out.println(dto.getGender());
+        }
+
     }
 }

@@ -1,15 +1,19 @@
 package com.sangsang.backend.jpa.manage.service;
 
+import com.sangsang.backend.common.Gender;
 import com.sangsang.backend.dto.UserDTO;
 import com.sangsang.backend.jpa.entity.UserEntity;
 import com.sangsang.backend.jpa.repository.UserJPARepository;
+import com.sangsang.backend.jpa.repository.UserQueryDslRepository;
 import com.sangsang.backend.jpa.service.UserService;
 import com.sangsang.backend.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("userJPAService")
@@ -19,11 +23,19 @@ public class UserJPAService implements UserService {
     @Autowired
     UserJPARepository userJPARepository;
 
+    @Autowired
+    UserQueryDslRepository userQueryDslRepository;
+
     private final UserMapper userMapper;
 
     @Override
+    @Transactional
     public UserDTO get(String id) {
         UserEntity entity = userJPARepository.getById(id);
+        if (entity == null) {
+            System.out.println("사용자 존재하지 않음");
+            return null;
+        }
         return userMapper.entityToDto(entity);
     }
 
@@ -33,13 +45,28 @@ public class UserJPAService implements UserService {
     }
 
     @Override
-    public UserDTO delete(String s) {
-        return null;
+    @Transactional
+    public UserDTO delete(String id) {
+        UserDTO dto = userMapper.entityToDto(userJPARepository.getById(id));
+        userJPARepository.deleteById(id);
+
+        return dto;
     }
 
     @Override
     public List<UserDTO> search() {
-        return null;
+
+        Gender gender = Gender.M;
+
+        List<UserEntity> entityList = userQueryDslRepository.findAllByGender(gender);
+
+        List<UserDTO> dtoList = new ArrayList<>();
+        for (UserEntity entity : entityList) {
+            dtoList.add(userMapper.entityToDto(entity));
+        }
+
+        return dtoList;
+
     }
 
     @Override
@@ -64,8 +91,11 @@ public class UserJPAService implements UserService {
     @Override
     public boolean join(UserDTO dto) {
         UserEntity entity = userMapper.dtoToEntity(dto);
-        userJPARepository.save(entity);
-
+        try {
+            userJPARepository.save(entity);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
         return true;
     }
 }
