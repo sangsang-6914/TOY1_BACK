@@ -20,12 +20,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserJPAService implements UserService {
 
-    @Autowired
-    UserJPARepository userJPARepository;
-
-    @Autowired
-    UserQueryDslRepository userQueryDslRepository;
-
+    private final UserJPARepository userJPARepository;
+    private final UserQueryDslRepository userQueryDslRepository;
     private final UserMapper userMapper;
 
     @Override
