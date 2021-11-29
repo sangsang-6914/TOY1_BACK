@@ -2,27 +2,29 @@ package com.sangsang.backend.jpa.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.sangsang.backend.common.Gender;
+import com.sangsang.backend.common.jpa.repository.AbstractQueryDslRepository;
+import com.sangsang.backend.common.search.SearchParam;
 import com.sangsang.backend.jpa.entity.QUserEntity;
 import com.sangsang.backend.jpa.entity.UserEntity;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@RequiredArgsConstructor
 @Repository
-public class UserQueryDslRepository {
-    private final JPAQueryFactory factory;
+public class UserQueryDslRepository extends AbstractQueryDslRepository<UserEntity, QUserEntity> {
 
+    public UserQueryDslRepository(JPAQueryFactory factory) {
+        super(factory);
+    }
     // 추후 condition 형태로 변형 -> 동적쿼리로 작성
-    // User -> 공통 Entity로 변경(Generic)
+    // Entity마다 1개의 QueryDslRepository를 가져야함
     // 2개의 qclass로 join test 추가
+    // 동적쿼리 만들 시 Specification처럼 SearchParam 하나 가지고는 처리할 수 없음
+    // booleanBuilder를 통해 하나하나 가지고 처리해야함.. 비효율적
     public List<UserEntity> findAllByGender(Gender gender) {
         QUserEntity qUserEntity = QUserEntity.userEntity;
 
-        List<UserEntity> list = factory
-                .select(qUserEntity)
-                .from(qUserEntity)
+        List<UserEntity> list = factory.selectFrom(qUserEntity)
                 .where(qUserEntity.gender.eq(gender))
                 .fetch();
 
