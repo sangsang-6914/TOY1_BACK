@@ -30,7 +30,7 @@ public class UserMapperTest {
     @Autowired
     UserMapper userMapper;
 
-    private String userOid = "AXKO133KMMM";
+    private String userOid = "5XYQ15SQIAS";
 
     @Test
     @DisplayName("DTO에서 Entity로 변환")

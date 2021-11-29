@@ -27,11 +27,9 @@ public class UserJPAService implements UserService {
     @Override
     @Transactional
     public UserDTO get(String id) {
-        UserEntity entity = userJPARepository.getById(id);
-        if (entity == null) {
-            System.out.println("사용자 존재하지 않음");
-            return null;
-        }
+        UserEntity entity = userJPARepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("조회된 데이터가 없습니다."));
+
         return userMapper.entityToDto(entity);
     }
 
