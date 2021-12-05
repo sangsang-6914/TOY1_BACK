@@ -1,24 +1,25 @@
-package com.sangsang.backend.jpa.manage.service;
+package com.sangsang.backend.user.jpa.service.impl;
 
-import com.sangsang.backend.common.Gender;
-import com.sangsang.backend.dto.UserDTO;
-import com.sangsang.backend.jpa.entity.UserEntity;
-import com.sangsang.backend.jpa.repository.UserJPARepository;
-import com.sangsang.backend.jpa.repository.UserQueryDslRepository;
-import com.sangsang.backend.jpa.service.UserService;
-import com.sangsang.backend.mapper.UserMapper;
+import com.sangsang.backend.common.constant.Gender;
+import com.sangsang.backend.common.search.PageResult;
+import com.sangsang.backend.common.search.SearchParam;
+import com.sangsang.backend.common.service.AbstractJPAManageService;
+import com.sangsang.backend.user.dto.UserDTO;
+import com.sangsang.backend.user.jpa.repository.UserJPARepository;
+import com.sangsang.backend.user.jpa.entity.UserEntity;
+import com.sangsang.backend.user.jpa.repository.UserQueryDslRepository;
+import com.sangsang.backend.user.service.UserService;
+import com.sangsang.backend.user.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service("userJPAService")
+@Service("userJPAServiceImpl")
 @RequiredArgsConstructor
-public class UserJPAService implements UserService {
+public class UserJPAServiceImpl extends AbstractJPAManageService<UserEntity, UserDTO, String> implements UserService {
 
     private final UserJPARepository userJPARepository;
     private final UserQueryDslRepository userQueryDslRepository;
@@ -48,7 +49,7 @@ public class UserJPAService implements UserService {
     }
 
     @Override
-    public List<UserDTO> search() {
+    public List<UserDTO> list(SearchParam param) {
 
         Gender gender = Gender.M;
 
@@ -61,6 +62,11 @@ public class UserJPAService implements UserService {
 
         return dtoList;
 
+    }
+
+    @Override
+    public PageResult<UserDTO> listWithPage(SearchParam param) {
+        return null;
     }
 
     @Override
@@ -80,6 +86,11 @@ public class UserJPAService implements UserService {
         UserEntity entity = userMapper.dtoToEntity(dto);
 
         return userMapper.entityToDto(entity);
+    }
+
+    @Override
+    public UserDTO add(UserDTO dto) {
+        return null;
     }
 
     @Override

@@ -1,7 +1,7 @@
-package com.sangsang.backend.jpa.service;
+package com.sangsang.backend.user.service;
 
 import com.sangsang.backend.common.service.CrudService;
-import com.sangsang.backend.dto.UserDTO;
+import com.sangsang.backend.user.dto.UserDTO;
 
 public interface UserService extends CrudService<UserDTO, String> {
 

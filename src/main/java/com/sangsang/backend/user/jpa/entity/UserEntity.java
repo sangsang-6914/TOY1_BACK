@@ -1,6 +1,6 @@
-package com.sangsang.backend.jpa.entity;
+package com.sangsang.backend.user.jpa.entity;
 
-import com.sangsang.backend.common.Gender;
+import com.sangsang.backend.common.constant.Gender;
 import com.sun.istack.NotNull;
 import lombok.*;
 

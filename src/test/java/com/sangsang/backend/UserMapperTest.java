@@ -1,24 +1,16 @@
 package com.sangsang.backend;
 
-import com.sangsang.backend.common.Gender;
-import com.sangsang.backend.dto.UserDTO;
-import com.sangsang.backend.jpa.entity.UserEntity;
-import com.sangsang.backend.jpa.service.UserService;
-import com.sangsang.backend.mapper.UserMapper;
-import lombok.RequiredArgsConstructor;
+import com.sangsang.backend.common.constant.Gender;
+import com.sangsang.backend.common.search.SearchParam;
+import com.sangsang.backend.user.dto.UserDTO;
+import com.sangsang.backend.user.jpa.entity.UserEntity;
+import com.sangsang.backend.user.service.UserService;
+import com.sangsang.backend.user.mapper.UserMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringBootConfiguration;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 @SpringBootTest
@@ -85,7 +77,8 @@ public class UserMapperTest {
     @DisplayName("JPA Search Test")
     void jpaSearchTest() {
 
-        List<UserDTO> list = userService.search();
+        SearchParam searchParam = new SearchParam();
+        List<UserDTO> list = userService.list(searchParam);
 
         for (UserDTO dto : list) {
             System.out.println(dto.getId());

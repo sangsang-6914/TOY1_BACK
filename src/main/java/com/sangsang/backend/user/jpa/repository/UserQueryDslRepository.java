@@ -1,11 +1,10 @@
-package com.sangsang.backend.jpa.repository;
+package com.sangsang.backend.user.jpa.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.sangsang.backend.common.Gender;
+import com.sangsang.backend.common.constant.Gender;
 import com.sangsang.backend.common.jpa.repository.AbstractQueryDslRepository;
-import com.sangsang.backend.common.search.SearchParam;
 import com.sangsang.backend.jpa.entity.QUserEntity;
-import com.sangsang.backend.jpa.entity.UserEntity;
+import com.sangsang.backend.user.jpa.entity.UserEntity;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

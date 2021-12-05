@@ -1,6 +1,6 @@
-package com.sangsang.backend.dto;
+package com.sangsang.backend.user.dto;
 
-import com.sangsang.backend.common.Gender;
+import com.sangsang.backend.common.constant.Gender;
 import lombok.*;
 
 @Builder
