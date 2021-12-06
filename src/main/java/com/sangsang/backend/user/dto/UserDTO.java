@@ -11,7 +11,7 @@ import lombok.*;
 public class UserDTO {
     private String oid;
 
-    private String id;
+    private String userId;
 
     private String name;
 

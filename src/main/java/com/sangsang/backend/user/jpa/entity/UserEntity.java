@@ -18,8 +18,8 @@ public class UserEntity {
     private String oid;
 
     @NotNull
-    @Column(name="id", length = 50)
-    private String id;
+    @Column(name="user_id", length = 50)
+    private String userId;
 
     @NotNull
     @Column(name="name", length = 50)

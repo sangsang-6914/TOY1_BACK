@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserJPARepository extends JpaRepository<UserEntity, String>, JpaSpecificationExecutor<UserEntity> {
 
-    UserEntity findByIdAndPassword(String id, String password);
+    UserEntity findByUserIdAndPassword(String userId, String password);
+
+    UserEntity findByUserId(String userId);
 
 }

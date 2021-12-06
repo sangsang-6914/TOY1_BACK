@@ -28,8 +28,11 @@ public class UserJPAServiceImpl extends AbstractJPAManageService<UserEntity, Use
     @Override
     @Transactional
     public UserDTO get(String id) {
-        UserEntity entity = userJPARepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("조회된 데이터가 없습니다."));
+        UserEntity entity = userJPARepository.findByUserId(id);
+
+        if (entity == null) {
+            System.out.println("조회된 사용자가 없습니다.");
+        }
 
         return userMapper.entityToDto(entity);
     }
@@ -74,7 +77,7 @@ public class UserJPAServiceImpl extends AbstractJPAManageService<UserEntity, Use
 
         /*
         // password 암호화 비교
-        UserEntity entity = userJPARepository.findByIdAndPassword(dto.getId(), dto.getPassword());
+        UserEntity entity = userJPARepository.findByUserIdAndPassword(dto.getUserId(), dto.getPassword());
         if (entity == null) {
             // 추후 에러 or 메시지 처리
             System.out.println("존재하지 않는 사용자");

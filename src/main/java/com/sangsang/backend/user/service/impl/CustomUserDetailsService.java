@@ -23,7 +23,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("아이디가 존재하지 않습니다."));
 
        CustomUserDetails userDetails = new CustomUserDetails();
-       userDetails.setId(userDTO.getId());
+       userDetails.setId(userDTO.getUserId());
        userDetails.setPw(userDTO.getPassword());
 
        return userDetails;

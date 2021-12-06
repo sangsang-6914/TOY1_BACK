@@ -10,7 +10,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @SpringBootTest
@@ -22,6 +24,9 @@ public class UserMapperTest {
     @Autowired
     UserMapper userMapper;
 
+    @Resource
+    BCryptPasswordEncoder bCryptPasswordEncoder;
+
     private String userOid = "5XYQ15SQIAS";
 
     @Test
@@ -29,7 +34,7 @@ public class UserMapperTest {
     void dtoToEntityTest() {
         final UserDTO userDTO = UserDTO.builder()
                 .oid(userOid)
-                .id("sangsang6914")
+                .userId("sangsang6914")
                 .name("우상훈")
                 .age(24)
                 .gender(Gender.M)
@@ -44,7 +49,7 @@ public class UserMapperTest {
     void jpaCreateTest() {
         final UserDTO userDTO = UserDTO.builder()
                 .oid(userOid)
-                .id("sangsang691422")
+                .userId("sangsang691422")
                 .password("AKEIWLLKSISKSLAKAL")
                 .name("김상훈")
                 .age(44)
@@ -60,7 +65,7 @@ public class UserMapperTest {
     void jpaReadTest() {
         UserDTO userDto = userService.get(userOid);
 
-        System.out.println(userDto.getId());
+        System.out.println(userDto.getUserId());
         System.out.println(userDto.getName());
     }
 
@@ -70,7 +75,7 @@ public class UserMapperTest {
         UserDTO userDTO = userService.delete(userOid);
 
         System.out.println(userDTO.getName());
-        System.out.println(userDTO.getId());
+        System.out.println(userDTO.getUserId());
     }
 
     @Test
@@ -81,9 +86,24 @@ public class UserMapperTest {
         List<UserDTO> list = userService.list(searchParam);
 
         for (UserDTO dto : list) {
-            System.out.println(dto.getId());
+            System.out.println(dto.getUserId());
             System.out.println(dto.getGender());
         }
 
+    }
+
+    @Test
+    @DisplayName("EncryptTest")
+    void EncryptTest() {
+        String pwd = "asdf123412#";
+
+        String encrypt = bCryptPasswordEncoder.encode(pwd);
+        System.out.println(encrypt);
+
+        if (bCryptPasswordEncoder.matches(pwd, encrypt)) {
+            System.out.println("동일한 패스워드!!");
+        } else {
+            System.out.println("다른 패스워드!!");
+        }
     }
 }

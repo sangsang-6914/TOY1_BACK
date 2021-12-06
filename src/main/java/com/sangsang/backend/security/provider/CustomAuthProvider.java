@@ -1,6 +1,8 @@
 package com.sangsang.backend.security.provider;
 
 import com.sangsang.backend.user.dto.CustomUserDetails;
+import com.sangsang.backend.user.dto.UserDTO;
+import com.sangsang.backend.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -17,10 +19,12 @@ public class CustomAuthProvider implements AuthenticationProvider {
 
     private UserDetailsService userDetailsService;
     private PasswordEncoder passwordEncoder;
+    private UserService userService;
 
-    CustomAuthProvider(@Lazy UserDetailsService userDetailsService, @Lazy PasswordEncoder passwordEncoder) {
+    CustomAuthProvider(@Lazy UserDetailsService userDetailsService, @Lazy PasswordEncoder passwordEncoder, @Lazy UserService userService) {
         this.userDetailsService = userDetailsService;
         this.passwordEncoder = passwordEncoder;
+        this.userService = userService;
     }
 
     @Override
@@ -28,7 +32,7 @@ public class CustomAuthProvider implements AuthenticationProvider {
         String id = authentication.getName();
         String pwd = (String)authentication.getCredentials();
 
-        CustomUserDetails user = (CustomUserDetails)userDetailsService.loadUserByUsername(id);
+        UserDTO user = userService.get(id);
 
         if (!passwordEncoder.matches(pwd, user.getPassword())) {
             throw new BadCredentialsException("비밀번호가 틀렸습니다.");

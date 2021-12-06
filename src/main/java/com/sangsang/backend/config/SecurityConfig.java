@@ -27,8 +27,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AuthenticationFailureHandler authenticationFailureHandler;
 
-    private final CustomUserDetailsService customUserDetailsService;
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -37,18 +35,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/resources/**");
+        web.ignoring().antMatchers("/h2-console/**");
     }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-        //        .antMatchers("/main/**").permitAll() // main/ 경로 모두 허용
+                //        .antMatchers("/main/**").permitAll() // main/ 경로 모두 허용
                 .antMatchers("/user/**").authenticated(); // 인증 필요
 
         http.csrf().disable(); // 추후 csrf토큰 처리 필요시 제거
 
         http.formLogin()
-                .loginPage("/login") // 지정 안할 시 security default page
+                // .loginPage("/login") // 지정 안할 시 security default page
                 .loginProcessingUrl("/loginProcess")
                 .usernameParameter("userid")
                 .passwordParameter("pw")
@@ -62,11 +61,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authenticationProvider(authenticationProvider);
     }
-
-    @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(customUserDetailsService);
-    }
-
-
 }
