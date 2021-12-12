@@ -3,6 +3,7 @@ package com.sangsang.backend.security.provider;
 import com.sangsang.backend.user.dto.CustomUserDetails;
 import com.sangsang.backend.user.dto.UserDTO;
 import com.sangsang.backend.user.service.UserService;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -17,14 +18,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class CustomAuthProvider implements AuthenticationProvider {
 
-    private UserDetailsService userDetailsService;
     private PasswordEncoder passwordEncoder;
     private UserService userService;
 
-    CustomAuthProvider(@Lazy UserDetailsService userDetailsService, @Lazy PasswordEncoder passwordEncoder, @Lazy UserService userService) {
-        this.userDetailsService = userDetailsService;
+    public CustomAuthProvider(@Lazy PasswordEncoder passwordEncoder, @Lazy UserService userService) {
         this.passwordEncoder = passwordEncoder;
         this.userService = userService;
+    }
+
+    public CustomAuthProvider() {
+
     }
 
     @Override
