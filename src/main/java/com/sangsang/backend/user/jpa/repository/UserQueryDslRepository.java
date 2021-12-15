@@ -3,7 +3,7 @@ package com.sangsang.backend.user.jpa.repository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.sangsang.backend.common.constant.Gender;
 import com.sangsang.backend.common.jpa.repository.AbstractQueryDslRepository;
-import com.sangsang.backend.jpa.entity.QUserEntity;
+import com.sangsang.backend.user.jpa.entity.QUserEntity;
 import com.sangsang.backend.user.jpa.entity.UserEntity;
 import org.springframework.stereotype.Repository;
 
