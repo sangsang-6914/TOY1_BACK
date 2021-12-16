@@ -27,11 +27,10 @@
     </Appenders>
 
     <Loggers>
-        <Root level="DEBUG">
-            <AppenderRef ref="Console"/>
-            <AppenderRef ref="File"/>
-        </Root>
-
+<!--        <Root level="DEBUG">-->
+<!--            <AppenderRef ref="Console"/>-->
+<!--            <AppenderRef ref="File"/>-->
+<!--        </Root>-->
         <Logger name="com.sangsang.backend" level="INFO" additivity="false">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="File"/>

@@ -11,6 +11,8 @@ import com.sangsang.backend.user.jpa.repository.UserQueryDslRepository;
 import com.sangsang.backend.user.service.UserService;
 import com.sangsang.backend.user.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

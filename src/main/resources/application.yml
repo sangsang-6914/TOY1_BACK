@@ -30,5 +30,5 @@ spring:
       schema-locations: classpath:/db/schema-h2.sql
       data-locations: classpath:/db/data-h2.sql
 
-logging:
-  config: classpath:log4j2.xml
+#logging:
+#  config: classpath:log4j2.xml

@@ -12,9 +12,7 @@ public class BackendApplication {
     public static void main(String[] args) {
 
         SpringApplication.run(BackendApplication.class, args);
-        LOGGER.debug("start sagnsang server!!");
-        LOGGER.info("start sangsang server info!!!");
-        LOGGER.error("start sangsang server error!!!");
+        LOGGER.info("START BACKEND WEBSERVER");
     }
 
 }
